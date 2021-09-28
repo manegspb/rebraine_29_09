@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  name: deploy
+spec:
+  selector:
+    matchLabels:
+      deployment: deploy
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        deployment: deploy
+    spec:
+      containers:
+      - image: manegspb/httpserver:latest
+        name: httpserver
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          limits:
+            cpu: "1"
+          requests:
+            cpu: "0.5"
